@@ -42,7 +42,7 @@ def get_db_row_count(db, table_name, where_clause=""):
     return count[0][0]
 
 
-def get_site_id(db, db_index):
+def get_site_details(db, db_index):
     db_connection = open_database(db)
     db_cursor = db_connection.cursor()
     query = "SELECT site_id, site_name, site_owner, closest_capital_city, api_key, email_address, pushover_user_key" \
@@ -50,6 +50,3 @@ def get_site_id(db, db_index):
     db_cursor.execute(query)
     row = db_cursor.fetchall()
     return row[0]
-
-def get_site_details(db, site_id):
-    db_connection, db_cursor = open_database(db)

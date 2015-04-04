@@ -15,7 +15,6 @@ site_overview_url = '/{0}/overview?api_key={1}'
 
 def get_energy_values(api_key, site_id, energy_date):
     url = base_url+site_energy_url.format(site_id, api_key, 'DAY', energy_date, energy_date)
-    #print(url)
     try:
         response = urlopen(url)
     except error.URLError:
