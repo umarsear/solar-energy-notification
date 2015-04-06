@@ -13,11 +13,31 @@ site_power_url = '/{0}/power?api_key={1}&startTime={2}%2000:00:00&endTime={3}%20
 site_overview_url = '/{0}/overview?api_key={1}'
 
 
-def get_power_values(api_key,site_id, start_date, end_date):
-    url = base_url+site_power_url.format(site_id, api_key, start_date, start_date)
-    response = urlopen(url)
-    str_response = response.readall().decode('utf-8')
-    print(str_response)
+def get_power_values(api_key, site_id, start_date, end_date):
+    url = base_url+site_power_url.format(site_id, api_key, start_date, end_date)
+    try:
+        response = urlopen(url)
+    except error.URLError:
+        return -1
+    else:
+        power_values={}
+        str_response = response.readall().decode('utf-8')
+        try:
+            obj = json.loads(str_response)
+        except:
+            return -1
+        else:
+            l = len(obj['power']['values'])
+            if l > 0:
+                for x in range(0, l):
+                    energy_value = obj['power']['values'][x]['value']
+                    if None != energy_value:
+                        power_date = obj['power']['values'][x]['date']
+                        power_value = int(obj['power']['values'][x]['value'])
+                        power_values[power_date] = power_value
+                return power_values
+            else:
+                return {}
 
 
 def get_energy_values(api_key, site_id, energy_date):
