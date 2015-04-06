@@ -20,11 +20,11 @@ def open_database(db):
     return db_connection
 
 
-def write_energy_to_database(db, site_id, energy, notification_sent):
+def write_energy_to_database(db, site_id, date_time, power, energy):
     db_connection = open_database(db)
     db_cursor=db_connection.cursor()
-    db_cursor.execute("INSERT INTO production(siteID, siteName, date, time, production, notified) VALUES(?,?,?,?,?,?)",
-                      (site_id, date.today(), datetime.now(), energy, notification_sent))
+    db_cursor.execute("INSERT INTO production(siteID, datetime, power, energy) VALUES(?,?,?,?)",
+                      (site_id, date_time, power, energy))
     db_connection.commit()
     db_connection.close()
 
