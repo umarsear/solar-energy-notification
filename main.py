@@ -1,6 +1,6 @@
 __author__ = 'Umar Sear'
 import sys
-from db_sqlite3 import get_db_row_count, get_site_details, write_energy_to_database, write_power_to_database
+from db_sqlite3 import get_db_row_count, get_site_details, write_energy_to_database, write_power_to_database, touch_site
 from solar_edge import get_energy_values, get_power_values
 from datetime import date, datetime, timedelta
 from sun_stage import its_between_dawn_sunset, its_after_sunset
@@ -11,13 +11,15 @@ dbname = "/Users/umasear/code/solar-energy-notification/data/solar_notification.
 def main():
     row_count = get_db_row_count("/Users/umasear/code/solar-energy-notification/data/solar_notification.db","sites");
 
-    for x in range(1,2):
+    for x in range(1,row_count+1):
         date_time = datetime.now()
         site_details = get_site_details(dbname,x)
 
         try:
-            last_update = date_time.strptime(site_details[7], "%Y-%m-%d %H:%M:%S.%f")
+            last_update = date_time.strptime(site_details[7], "%Y-%m-%d").date()
+
         except:
+
             last_update = date.today() - timedelta(1)
 
         if its_between_dawn_sunset(site_details[3]):
@@ -28,6 +30,7 @@ def main():
         elif its_after_sunset(site_details[3]) and (last_update < date_time.date()):
             power_values = get_power_values(site_details[4], site_details[0], date_time.date(), date_time.date())
             write_power_to_database(dbname,site_details[0],power_values)
+            touch_site(dbname,site_details[0],date_time.date())
 
 
 if __name__ == '__main__':

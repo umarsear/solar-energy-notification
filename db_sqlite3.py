@@ -36,9 +36,19 @@ def write_power_to_database(db, site_id, power_values):
     for date_time, power in power_values.items():
         db_cursor.execute("INSERT INTO power(site_id, time_stamp,  power_level) VALUES(?,?,?)",
                       (site_id, date_time, power))
+        print(site_id)
 
     db_connection.commit()
     db_connection.close()
+
+
+def touch_site(db, site_id, date):
+    db_connection = open_database(db)
+    db_cursor=db_connection.cursor()
+    db_cursor.execute("UPDATE sites SET last_update=? WHERE site_id=?", (date, site_id))
+    db_connection.commit()
+    db_connection.close()
+
 
 
 def get_db_row_count(db, table_name, where_clause=""):
