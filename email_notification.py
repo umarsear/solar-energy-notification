@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from configparser import ConfigParser
 
 parser = ConfigParser()
-parser.read('solar_notification.cfg')
+parser.read('solar_notification.ini')
 
 from_email = parser.get('mail_server','email_address')
 server_address = parser.get('mail_server','server_address')
