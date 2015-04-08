@@ -4,6 +4,7 @@ from db_sqlite3 import get_db_row_count, get_site_details, write_energy_to_datab
 from solar_edge import get_energy_values, get_power_values
 from datetime import date, datetime, timedelta
 from sun_stage import its_between_dawn_sunset, its_after_sunset
+from email_notification import send_email
 
 # move the dbname to config file and add relative path instead of explicit path
 dbname = "/Users/umasear/code/solar-energy-notification/data/solar_notification.db"
@@ -28,10 +29,13 @@ def main():
             print("{}'s solar system produced {} KWhr of electricity".format(site_details[2], kwhr))
 
         elif its_after_sunset(site_details[3]) and (last_update < date_time.date()):
-            power_values = get_power_values(site_details[4], site_details[0], date_time.date(), date_time.date())
-            write_power_to_database(dbname,site_details[0],power_values)
-            touch_site(dbname,site_details[0],date_time.date())
+            kwhr = get_energy_values(site_details[4], site_details[0], date_time.date())
+            #power_values = get_power_values(site_details[4], site_details[0], date_time.date(), date_time.date())
+            #write_power_to_database(dbname,site_details[0],power_values)
+            #touch_site(dbname,site_details[0],date_time.date())
+            send_email(site_details[2], 'umarsear@gmail.com', 'Solar production notification', kwhr)
 
+    send_email(site_details[2], 'umarsear@gmail.com', 'Solar production notification', 45.60)
 
 if __name__ == '__main__':
     sys.exit(main())

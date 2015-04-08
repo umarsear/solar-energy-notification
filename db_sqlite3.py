@@ -31,7 +31,7 @@ def write_energy_to_database(db, site_id, date_time, energy):
 
 def write_power_to_database(db, site_id, power_values):
     db_connection = open_database(db)
-    db_cursor=db_connection.cursor()
+    db_cursor = db_connection.cursor()
 
     for date_time, power in power_values.items():
         db_cursor.execute("INSERT INTO power(site_id, time_stamp,  power_level) VALUES(?,?,?)",
