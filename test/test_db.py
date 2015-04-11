@@ -14,7 +14,8 @@ else:
 
 print(parser.sections())
 
-database_name = parser.get('database', 'dbfilename')
+database_name="../data/solar_notification.db"
+#database_name = parser.get('database', 'dbfilename')
 
 
 class DatabaseTestCase(unittest.TestCase):
