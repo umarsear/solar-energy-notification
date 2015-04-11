@@ -12,6 +12,8 @@ if len(sys.argv) > 1:
 else:
     parser.read('../solar_notification.ini')
 
+print(parser.sections())
+
 database_name = parser.get('database', 'dbfilename')
 
 

@@ -43,7 +43,7 @@ def write_power_to_database(db, site_id, power_values):
 
 def touch_site(db, site_id, date):
     db_connection = open_database(db)
-    db_cursor=db_connection.cursor()
+    db_cursor = db_connection.cursor()
     db_cursor.execute("UPDATE sites SET last_update=? WHERE site_id=?", (date, site_id))
     db_connection.commit()
     db_connection.close()
