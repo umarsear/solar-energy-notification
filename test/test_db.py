@@ -3,6 +3,7 @@ __author__ = 'umasear'
 import unittest
 import sys
 from db_sqlite3 import get_db_row_count
+from solar_edge import get_power_values
 from configparser import ConfigParser
 
 parser = ConfigParser()
@@ -22,6 +23,9 @@ class DatabaseTestCase(unittest.TestCase):
 
     def test_get_db_row_count(self):
         self.assertGreaterEqual(1,0)
+
+    def test_some_random(self):
+        self.assertLessEqual(1,9)
 
 if __name__ == '__main__':
     unittest.main()
