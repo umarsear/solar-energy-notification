@@ -9,7 +9,11 @@ from configparser import ConfigParser
 
 
 parser = ConfigParser()
-parser.read('solar_notification.ini')
+
+if len(sys.argv) > 1:
+    parser.read(sys.argv[1])
+else:
+    parser.read('solar_notification.ini')
 
 #  add relative path instead of explicit path
 database_name = parser.get('database','dbfilename')

@@ -1,11 +1,17 @@
 __author__ = 'umasear'
 
 import unittest
+import sys
 from db_sqlite3 import get_db_row_count
 from configparser import ConfigParser
 
 parser = ConfigParser()
-parser.read('../solar_notification.ini')
+
+if len(sys.argv) > 1:
+    parser.read(sys.argv[1])
+else:
+    parser.read('solar_notification.ini')
+
 database_name = parser.get('database', 'dbfilename')
 
 
