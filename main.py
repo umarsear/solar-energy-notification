@@ -36,14 +36,16 @@ def main():
         if its_between_dawn_sunset(site_details[3]):
             kwhr = get_energy_values(site_details[4], site_details[0], date_time.date())
             write_energy_to_database(database_name, site_details[0], date_time, kwhr)
-            print("{}'s solar system produced {} KWhr of electricity".format(site_details[2], kwhr))
+            print("{}'s solar system produced {} KWhr of electricity so far".format(site_details[2], kwhr))
 
         elif its_after_sunset(site_details[3]) and (last_update < date_time.date()):
             kwhr = get_energy_values(site_details[4], site_details[0], date_time.date())
             power_values = get_power_values(site_details[4], site_details[0], date_time.date(), date_time.date())
-            write_power_to_database(database_name,site_details[0],power_values)
+            write_power_to_database(database_name, site_details[0], power_values)
             touch_site(database_name,site_details[0],date_time.date())
-            send_email(site_details[2], 'umarsear@gmail.com', 'Solar production notification', kwhr)
+            if len(site_details[5]) > 0:
+                send_email(site_details[2], site_details[5], 'Solar production notification', kwhr)
+            print("{}'s solar system produced {} KWhr of electricity today".format(site_details[2], kwhr))
 
 if __name__ == '__main__':
     sys.exit(main())
