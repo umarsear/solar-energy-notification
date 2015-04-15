@@ -20,11 +20,11 @@ database_name = parser.get('database','dbfilename')
 
 
 def main():
-    row_count = get_db_row_count(database_name,"sites");
+    row_count = get_db_row_count(database_name, "sites");
 
     for x in range(1,row_count+1):
         date_time = datetime.now()
-        site_details = get_site_details(database_name,x)
+        site_details = get_site_details(database_name, x)
 
         try:
             last_update = date_time.strptime(site_details[7], "%Y-%m-%d").date()

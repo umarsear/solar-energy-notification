@@ -4,9 +4,14 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from configparser import ConfigParser
+import sys
 
 parser = ConfigParser()
-parser.read('solar_notification.ini')
+
+if len(sys.argv) > 1:
+    parser.read(sys.argv[1])
+else:
+    parser.read('solar_notification.ini')
 
 from_email = parser.get('mail_server','email_address')
 server_address = parser.get('mail_server','server_address')
