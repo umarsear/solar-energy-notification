@@ -39,6 +39,7 @@ def get_power_values(api_key, site_id, start_date, end_date):
             else:
                 return {}
 
+# need to convert to a standard format for all products
 
 def get_energy_values(api_key, site_id, energy_date):
     url = base_url+site_energy_url.format(site_id, api_key, 'DAY', energy_date, energy_date)
